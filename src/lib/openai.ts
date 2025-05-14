@@ -1,22 +1,19 @@
 import type { GenerateReplyParams } from '../types';
-import { supabase } from './supabase';
 
 export async function generateReply({ message, tone }: GenerateReplyParams): Promise<string> {
   try {
-    const { data, error } = await supabase.functions.invoke('generate-reply', {
-      body: { message, tone },
+    const res = await fetch('https://ubkxhzwdfmuhgiqvdacg.supabase.co/functions/v1/generate-reply', {
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message, tone }),
     });
 
-    if (error) {
-      console.error('Supabase function error:', error);
-      throw new Error(error.message);
-    }
+    const data = await res.json();
 
-    if (!data || !data.reply) {
-      throw new Error('Invalid response from generate-reply function');
+    if (!res.ok || !data.reply) {
+      throw new Error(data.error || 'No reply received');
     }
 
     return data.reply;

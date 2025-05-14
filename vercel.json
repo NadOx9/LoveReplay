@@ -1,9 +1,11 @@
 {
   "functions": {
-    "api/generate.ts": {
-      "runtime": "nodejs18.x"
+    "api/*.ts": {
+      "runtime": "vercel-node@3.0.0"
     }
-  },
+  }
+}
+
   "build": {
     "env": {
       "OPENAI_API_KEY": "@openai_api_key"

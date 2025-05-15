@@ -14,19 +14,19 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ userId }) => {
     try {
       const { PREMIUM } = STRIPE_PRODUCTS;
 
-      toast.loading('🔐 Récupération de la session utilisateur...');
+      toast.loading('Retrieving user session...');
       const {
         data: { session },
       } = await supabase.auth.getSession();
 
       if (!session?.access_token) {
         toast.dismiss();
-        toast.error("Tu dois être connecté pour t’abonner.");
+        toast.error('You must be logged in to subscribe.');
         return;
       }
 
-      toast.success("✅ Session récupérée");
-      toast.loading("💳 Création de la session Stripe...");
+      toast.success('Session retrieved ✅');
+      toast.loading('Creating Stripe checkout session...');
 
       const { data, error } = await supabase.functions.invoke('stripe-checkout', {
         body: {
@@ -43,24 +43,24 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ userId }) => {
       toast.dismiss();
 
       if (error) {
-        console.error("❌ Erreur Supabase :", error);
-        toast.error("Erreur pendant la création du paiement.");
+        console.error('❌ Supabase function error:', error);
+        toast.error('Failed to create payment session.');
         return;
       }
 
       if (!data?.url) {
-        console.error("❌ Pas d'URL retournée :", data);
-        toast.error("Erreur : aucune URL de paiement.");
+        console.error('❌ No Stripe URL returned:', data);
+        toast.error('No payment URL returned.');
         return;
       }
 
-      toast.success("🚀 Redirection vers Stripe...");
+      toast.success('Redirecting to Stripe...');
       window.location.href = data.url;
 
     } catch (error: any) {
       toast.dismiss();
-      console.error("Checkout error:", error);
-      toast.error(`Erreur inattendue : ${error.message}`);
+      console.error('Checkout error:', error);
+      toast.error(`Unexpected error: ${error.message}`);
     }
   };
 

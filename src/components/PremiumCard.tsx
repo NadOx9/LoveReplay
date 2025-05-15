@@ -78,23 +78,31 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ userId }) => {
         </div>
 
         <p className="text-gray-300 mb-6">
-          Unlock unlimited replies and all tones for just $9.99/month
+          Stop getting left on read. Start sending replies that actually work.
         </p>
 
         <div className="space-y-3 mb-6">
           <div className="flex items-start">
             <MessageCircle className="text-pink-400 mr-3 mt-0.5" size={18} />
             <div>
-              <p className="text-white font-medium">Unlimited Replies</p>
-              <p className="text-gray-400 text-sm">Never run out of replies again</p>
+              <p className="text-white font-medium">Unlimited AI Replies</p>
+              <p className="text-gray-400 text-sm">Never run out of smart answers again.</p>
             </div>
           </div>
 
           <div className="flex items-start">
             <Zap className="text-pink-400 mr-3 mt-0.5" size={18} />
             <div>
-              <p className="text-white font-medium">All Premium Tones</p>
-              <p className="text-gray-400 text-sm">Access to Savage and Crazy tones</p>
+              <p className="text-white font-medium">Savage, Crazy & More</p>
+              <p className="text-gray-400 text-sm">Unlock wild tones to stand out instantly.</p>
+            </div>
+          </div>
+
+          <div className="flex items-start">
+            <Sparkles className="text-pink-400 mr-3 mt-0.5" size={18} />
+            <div>
+              <p className="text-white font-medium">VIP Experience</p>
+              <p className="text-gray-400 text-sm">Priority speed + future feature drops.</p>
             </div>
           </div>
         </div>
@@ -106,7 +114,7 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ userId }) => {
           whileTap={{ scale: 0.98 }}
         >
           <CreditCard size={18} />
-          <span>Upgrade Now - $9.99/month</span>
+          <span>Go Premium - $9.99/month</span>
         </motion.button>
       </div>
     </motion.div>

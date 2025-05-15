@@ -52,7 +52,7 @@ const LandingPage: React.FC = () => {
         © 2025 LoveReplay. Made with ❤️ by NadOx.
       </footer>
     </div>
-  );
+  ); 
 };
 
 export default LandingPage;

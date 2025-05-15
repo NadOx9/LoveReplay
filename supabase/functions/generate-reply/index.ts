@@ -13,6 +13,8 @@ interface RequestBody {
 }
 
 serve(async (req) => {
+  console.log("⚡ Function started");
+
   if (req.method === "OPTIONS") {
     return new Response(null, {
       status: 204,
@@ -22,16 +24,21 @@ serve(async (req) => {
 
   try {
     const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
+    console.log("🔑 OpenAI Key Present:", !!OPENAI_API_KEY);
+
     if (!OPENAI_API_KEY) {
       throw new Error("OPENAI_API_KEY is not configured");
     }
 
+    const rawText = await req.text();
+    console.log("📥 RAW BODY:", rawText);
+
     let body: RequestBody;
     try {
-      body = await req.json();
+      body = JSON.parse(rawText);
     } catch (_) {
       return new Response(
-        JSON.stringify({ error: "Invalid JSON in request body" }),
+        JSON.stringify({ error: "Invalid JSON in request body", raw: rawText }),
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -50,6 +57,32 @@ serve(async (req) => {
     }
 
     const { message, tone } = body;
+    console.log("🧠 message:", message);
+    console.log("🎭 tone:", tone);
+
+    // 💬 Prompt version Coach en séduction
+    const basePrompt = `You're a dating coach and seduction expert who writes the perfect replies to any message. You know how to control tone, rhythm, and emotional impact. You understand attraction, confidence, and subtle power dynamics. Never say you're an AI or assistant. Your response must sound 100% human — confident, natural, and socially sharp. Adapt the length to the message: short if it’s short, more detailed if the message is long. Keep it smart, stylish, and emotionally calibrated.`;
+
+    let systemPrompt = "";
+    switch (tone.toLowerCase()) {
+      case "romantic":
+        systemPrompt = `${basePrompt} Use a romantic tone: warm, sincere, emotionally attractive. Make it feel authentic, never cringe.`;
+        break;
+      case "cheeky":
+        systemPrompt = `${basePrompt} Use a cheeky tone: flirty, confident, playful with light teasing. Spark attraction without being rude.`;
+        break;
+      case "distant":
+        systemPrompt = `${basePrompt} Use a distant tone: brief, emotionally cool, mysterious. Give just enough to keep curiosity alive.`;
+        break;
+      case "savage":
+        systemPrompt = `${basePrompt} Use a savage tone: bold, brutally honest, stylishly dismissive. Hit with confidence but keep it classy.`;
+        break;
+      case "crazy":
+        systemPrompt = `${basePrompt} Use a crazy tone: wild, unpredictable, slightly absurd. Be chaotic but still make some sense.`;
+        break;
+      default:
+        systemPrompt = `${basePrompt} Use a ${tone.toLowerCase()} tone.`;
+    }
 
     const openAIResponse = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -60,23 +93,17 @@ serve(async (req) => {
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
         messages: [
-          {
-            role: "system",
-            content: `You are a helpful assistant that generates replies to messages in a ${tone} tone. Keep responses concise and appropriate.`,
-          },
-          {
-            role: "user",
-            content: `Reply to this message in a ${tone} tone: "${message}"`,
-          },
+          { role: "system", content: systemPrompt },
+          { role: "user", content: message },
         ],
         max_tokens: 300,
-        temperature: 0.7,
+        temperature: 0.85,
       }),
     });
 
     if (!openAIResponse.ok) {
       const errorData = await openAIResponse.text();
-      console.error("OpenAI API error:", errorData);
+      console.error("❌ OpenAI API error:", errorData);
       return new Response(
         JSON.stringify({ error: "OpenAI API request failed", details: errorData }),
         {
@@ -87,8 +114,9 @@ serve(async (req) => {
     }
 
     const data = await openAIResponse.json();
-    const reply = data.choices[0]?.message?.content?.trim();
+    console.log("✅ OpenAI API response received");
 
+    const reply = data.choices[0]?.message?.content?.trim();
     if (!reply) {
       throw new Error("Invalid response from OpenAI");
     }
@@ -97,8 +125,9 @@ serve(async (req) => {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
+
   } catch (error) {
-    console.error("Function error:", error instanceof Error ? error.message : error);
+    console.error("🔥 Function error:", error instanceof Error ? error.message : error);
     return new Response(
       JSON.stringify({
         error: error instanceof Error ? error.message : "An unexpected error occurred",

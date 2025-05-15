@@ -1,4 +1,3 @@
-// Follow Stripe best practices for handling payments
 import { serve } from "npm:@supabase/functions-js@2.1.5";
 import Stripe from "npm:stripe@13.4.0";
 
@@ -13,7 +12,6 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
-  // Handle CORS
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders, status: 204 });
   }
@@ -25,7 +23,6 @@ serve(async (req) => {
       throw new Error('User ID is required');
     }
 
-    // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -36,10 +33,8 @@ serve(async (req) => {
               name: 'LoveReply AI Premium',
               description: 'Unlimited replies and all premium tones',
             },
-            unit_amount: 999, // $9.99 in cents
-            recurring: {
-              interval: 'month',
-            },
+            unit_amount: 999,
+            recurring: { interval: 'month' },
           },
           quantity: 1,
         },
@@ -51,12 +46,13 @@ serve(async (req) => {
     });
 
     return new Response(
-      JSON.stringify({ sessionId: session.id }),
+      JSON.stringify({ url: session.url }), // ✅ clé de la redirection
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200,
       }
     );
+
   } catch (error) {
     return new Response(
       JSON.stringify({ error: error.message }),

@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, Sparkles, MessageCircle, Zap } from 'lucide-react';
-import { redirectToCheckout } from '../lib/stripe';
+import { STRIPE_PRODUCTS } from '../lib/stripe-config';
+import { supabase } from '../lib/supabase';
 import toast from 'react-hot-toast';
 
 interface PremiumCardProps {
@@ -11,12 +12,55 @@ interface PremiumCardProps {
 const PremiumCard: React.FC<PremiumCardProps> = ({ userId }) => {
   const handleUpgrade = async () => {
     try {
-      toast.loading('Preparing checkout...');
-      await redirectToCheckout(userId);
-    } catch (error) {
+      const { PREMIUM } = STRIPE_PRODUCTS;
+
+      toast.loading('🔐 Récupération de la session utilisateur...');
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session?.access_token) {
+        toast.dismiss();
+        toast.error("Tu dois être connecté pour t’abonner.");
+        return;
+      }
+
+      toast.success("✅ Session récupérée");
+      toast.loading("💳 Création de la session Stripe...");
+
+      const { data, error } = await supabase.functions.invoke('stripe-checkout', {
+        body: {
+          price_id: PREMIUM.priceId,
+          mode: PREMIUM.mode,
+          success_url: `${window.location.origin}/?success=true`,
+          cancel_url: `${window.location.origin}/?canceled=true`,
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+
       toast.dismiss();
-      toast.error('Failed to start checkout process');
-      console.error('Checkout error:', error);
+
+      if (error) {
+        console.error("❌ Erreur Supabase :", error);
+        toast.error("Erreur pendant la création du paiement.");
+        return;
+      }
+
+      if (!data?.url) {
+        console.error("❌ Pas d'URL retournée :", data);
+        toast.error("Erreur : aucune URL de paiement.");
+        return;
+      }
+
+      toast.success("🚀 Redirection vers Stripe...");
+      window.location.href = data.url;
+
+    } catch (error: any) {
+      toast.dismiss();
+      console.error("Checkout error:", error);
+      toast.error(`Erreur inattendue : ${error.message}`);
     }
   };
 
@@ -32,11 +76,11 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ userId }) => {
           <Sparkles className="text-pink-400" size={22} />
           <h2 className="text-2xl font-bold text-white">Go Premium</h2>
         </div>
-        
+
         <p className="text-gray-300 mb-6">
           Unlock unlimited replies and all tones for just $9.99/month
         </p>
-        
+
         <div className="space-y-3 mb-6">
           <div className="flex items-start">
             <MessageCircle className="text-pink-400 mr-3 mt-0.5" size={18} />
@@ -45,7 +89,7 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ userId }) => {
               <p className="text-gray-400 text-sm">Never run out of replies again</p>
             </div>
           </div>
-          
+
           <div className="flex items-start">
             <Zap className="text-pink-400 mr-3 mt-0.5" size={18} />
             <div>
@@ -54,7 +98,7 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ userId }) => {
             </div>
           </div>
         </div>
-        
+
         <motion.button
           onClick={handleUpgrade}
           className="w-full py-3 px-4 bg-gradient-to-r from-pink-600 to-red-500 text-white font-medium rounded-lg flex items-center justify-center space-x-2 shadow-lg hover:from-pink-700 hover:to-red-600"

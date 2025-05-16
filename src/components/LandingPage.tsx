@@ -1,58 +1,63 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Heart, Sparkles, MessageCircle, Zap } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-zinc-900 text-white px-6 py-16">
-      {/* Hero Section */}
-      <section className="text-center max-w-2xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Tu veux répondre comme un boss à ton crush ?
+    <div className="min-h-screen flex flex-col items-center justify-center py-12 px-4">
+      <motion.div
+        className="text-center max-w-3xl mx-auto"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <motion.div
+          className="w-20 h-20 bg-gradient-to-br from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-8"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Heart className="w-10 h-10 text-white" />
+        </motion.div>
+
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          Craft Perfect Message Replies with AI
         </h1>
-        <p className="text-lg md:text-xl text-zinc-300 mb-8">
-          LoveReplay est l’IA qui te génère des réponses irrésistibles pour tous tes messages amoureux.
+        
+        <p className="text-xl text-gray-300 mb-12">
+          Never struggle with message responses again. LoveReply AI helps you generate the perfect reply with the right tone, every time.
         </p>
-        <Button className="text-lg px-6 py-3">Commencer maintenant</Button>
-      </section>
 
-      {/* Comment ça marche */}
-      <section className="mt-24 max-w-3xl mx-auto">
-        <h2 className="text-2xl font-semibold mb-6 text-center">Comment ça fonctionne ?</h2>
-        <ol className="space-y-4 text-zinc-300 text-lg">
-          <li>💌 Tu colles un message reçu (Insta, SMS, Snap...)</li>
-          <li>🎭 Tu choisis ton style de réponse : flirty, drôle, savage...</li>
-          <li>⚡ L’IA génère la meilleure punchline pour toi</li>
-        </ol>
-      </section>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <motion.div
+            className="bg-gray-800 rounded-xl p-6"
+            whileHover={{ scale: 1.02 }}
+          >
+            <MessageCircle className="w-8 h-8 text-pink-400 mb-4" />
+            <h3 className="text-lg font-semibold text-white mb-2">Multiple Tones</h3>
+            <p className="text-gray-300">Choose from romantic, cheeky, distant, and more tones for the perfect response</p>
+          </motion.div>
 
-      {/* Exemples */}
-      <section className="mt-24 max-w-2xl mx-auto text-center">
-        <h2 className="text-2xl font-semibold mb-4">Exemples de réponses LoveReplay</h2>
-        <div className="bg-zinc-800 rounded-xl p-6 space-y-4 text-left text-zinc-200">
-          <div>
-            <strong>Elle :</strong> “Tu penses à moi ?” <br />
-            <strong>LoveReplay :</strong> “Seulement quand mon cœur veut un peu de douceur.”
-          </div>
-          <div>
-            <strong>Lui :</strong> “T’as fais quoi ce week-end ?” <br />
-            <strong>LoveReplay :</strong> “J’ai survécu sans toi. C’est déjà beaucoup.”
-          </div>
+          <motion.div
+            className="bg-gray-800 rounded-xl p-6"
+            whileHover={{ scale: 1.02 }}
+          >
+            <Sparkles className="w-8 h-8 text-pink-400 mb-4" />
+            <h3 className="text-lg font-semibold text-white mb-2">AI-Powered</h3>
+            <p className="text-gray-300">Advanced AI technology ensures natural and engaging responses every time</p>
+          </motion.div>
+
+          <motion.div
+            className="bg-gray-800 rounded-xl p-6"
+            whileHover={{ scale: 1.02 }}
+          >
+            <Zap className="w-8 h-8 text-pink-400 mb-4" />
+            <h3 className="text-lg font-semibold text-white mb-2">Instant Results</h3>
+            <p className="text-gray-300">Get your perfectly crafted reply in seconds, ready to copy and send</p>
+          </motion.div>
         </div>
-      </section>
-
-      {/* Appel à l’action */}
-      <section className="mt-24 text-center">
-        <h2 className="text-2xl font-bold mb-4">Prêt à briller par message ?</h2>
-        <Button className="text-lg px-6 py-3">Lancer LoveReplay maintenant</Button>
-        <p className="text-zinc-400 mt-2">Gratuit, sans inscription.</p>
-      </section>
-
-      {/* Footer */}
-      <footer className="mt-32 text-center text-zinc-500 text-sm">
-        © 2025 LoveReplay. Made with ❤️ by NadOx.
-      </footer>
+      </motion.div>
     </div>
-  ); 
-};
+  );
+}
 
-export default LandingPage;
+export default LandingPage

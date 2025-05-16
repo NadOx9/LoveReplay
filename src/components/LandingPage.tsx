@@ -23,22 +23,14 @@ const LandingPage: React.FC = () => {
           AI That Replies to Your DMs So You Don’t Have To
         </h1>
 
-        <p className="text-lg md:text-xl text-gray-400 mb-10">
+        <p className="text-lg md:text-xl text-gray-400 mb-12">
           LoveReplay is an AI tool that helps you craft the perfect reply to any message —
           from your crush, ex, or someone who just left you on read.  
           Flirty, romantic, funny, cold, savage — you decide the tone. The AI does the magic.
         </p>
 
-        {/* CTA to Login */}
-        <a
-          href="/login"
-          className="bg-pink-600 hover:bg-pink-700 transition text-white font-semibold px-8 py-4 rounded-full text-lg shadow-lg"
-        >
-          💌 Generate Your Reply
-        </a>
-
         {/* How it works section */}
-        <div className="mt-20 text-left">
+        <div className="mt-6 text-left">
           <h2 className="text-2xl font-semibold text-white text-center mb-10">
             How It Works
           </h2>
@@ -66,7 +58,7 @@ const LandingPage: React.FC = () => {
 
         {/* Footer */}
         <div className="mt-16 text-center text-sm text-gray-500">
-          Over 10,000 flirty comebacks generated 💘 Join the movement.Build by NadOx
+          Over 10,000 flirty comebacks generated 💘 Join the movement.
         </div>
       </motion.div>
     </div>

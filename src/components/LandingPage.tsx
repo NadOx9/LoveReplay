@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from './ui/Button';
+import { Heart, Sparkles, MessageCircle, Zap } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   return (

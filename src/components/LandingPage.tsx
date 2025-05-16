@@ -4,7 +4,7 @@ import { MessageCircle, Sparkles, Zap, Heart } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   return (
-    <div className="min-h-screen w-full bg-black text-white px-6 py-16 flex flex-col items-center justify-center">
+    <div className="min-h-screen w-full bg-gradient-to-b from-gray-900 via-black to-gray-900 text-white px-6 py-16 flex flex-col items-center justify-center">
       <motion.div
         className="max-w-4xl w-full text-center"
         initial={{ opacity: 0, y: 40 }}
@@ -58,7 +58,7 @@ const LandingPage: React.FC = () => {
 
         {/* Footer */}
         <div className="mt-16 text-center text-sm text-gray-500">
-          Over 10,000 flirty comebacks generated 💘 Join the movement.
+          Over 10,000 flirty comebacks generated 💘 Join the movement.Build by NadOx
         </div>
       </motion.div>
     </div>

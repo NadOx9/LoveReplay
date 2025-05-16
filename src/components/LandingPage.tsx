@@ -1,53 +1,65 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Heart, MessageCircle, Sparkles, Zap } from 'lucide-react';
+import { Sparkles, Heart, MessageCircle, Flame, Zap } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center py-16 px-4 bg-gradient-to-b from-black via-gray-900 to-gray-800">
+    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white px-6 py-12 flex flex-col items-center justify-center">
       <motion.div
-        className="text-center max-w-3xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
+        className="text-center max-w-3xl"
       >
-        <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg">
-          <Heart className="w-10 h-10 text-white" />
+        <div className="mb-6 flex justify-center">
+          <div className="w-24 h-24 bg-pink-600 rounded-full flex items-center justify-center shadow-xl">
+            <Heart className="w-12 h-12 text-white" />
+          </div>
         </div>
 
-        <h1 className="text-5xl font-bold text-white mb-6 leading-tight">
-          Turn Awkward Messages into Perfect Replies 💬
+        <h1 className="text-5xl font-bold mb-4 leading-tight tracking-tight">
+          AI Replies That Actually Make Them Want You 💘
         </h1>
 
-        <p className="text-xl text-gray-300 mb-10">
-          LoveReplay uses AI to craft the ideal response to any message – flirty, mysterious, savage, or smooth. Never be left on read again.
+        <p className="text-xl text-gray-300 mb-8">
+          Stop overthinking. Paste any message, choose a tone, and let our AI write the perfect comeback — funny, romantic, savage, or smooth.
         </p>
 
         <a
           href="/app"
-          className="inline-block bg-pink-600 hover:bg-pink-700 text-white font-semibold text-lg px-6 py-3 rounded-full shadow-md transition"
+          className="bg-pink-600 hover:bg-pink-700 transition text-white font-semibold px-8 py-3 rounded-full shadow-lg text-lg"
         >
-          Generate My Reply
+          ✨ Try LoveReplay Now
         </a>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14">
-          <motion.div className="bg-gray-900 rounded-xl p-6" whileHover={{ scale: 1.02 }}>
-            <MessageCircle className="w-8 h-8 text-pink-400 mb-4" />
-            <h3 className="text-lg font-semibold text-white mb-2">Choose Your Tone</h3>
-            <p className="text-gray-400">Romantic, funny, cold or savage – tailor your vibe to match any situation.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+          <motion.div whileHover={{ scale: 1.03 }} className="bg-gray-900 rounded-2xl p-6 shadow-lg">
+            <MessageCircle className="w-8 h-8 text-pink-400 mb-3" />
+            <h3 className="text-xl font-semibold mb-2">Context-Aware Responses</h3>
+            <p className="text-gray-400">
+              LoveReplay understands the vibe of any message and adapts instantly.
+            </p>
           </motion.div>
 
-          <motion.div className="bg-gray-900 rounded-xl p-6" whileHover={{ scale: 1.02 }}>
-            <Sparkles className="w-8 h-8 text-pink-400 mb-4" />
-            <h3 className="text-lg font-semibold text-white mb-2">Powered by AI</h3>
-            <p className="text-gray-400">Replies crafted by advanced AI trained to charm, intrigue and impress.</p>
+          <motion.div whileHover={{ scale: 1.03 }} className="bg-gray-900 rounded-2xl p-6 shadow-lg">
+            <Sparkles className="w-8 h-8 text-pink-400 mb-3" />
+            <h3 className="text-xl font-semibold mb-2">Customizable Tones</h3>
+            <p className="text-gray-400">
+              Romantic? Savage? Dry? Choose the style and let the AI vibe with it.
+            </p>
           </motion.div>
 
-          <motion.div className="bg-gray-900 rounded-xl p-6" whileHover={{ scale: 1.02 }}>
-            <Zap className="w-8 h-8 text-pink-400 mb-4" />
-            <h3 className="text-lg font-semibold text-white mb-2">Instant & Natural</h3>
-            <p className="text-gray-400">Get your perfect message in seconds – smooth and ready to send.</p>
+          <motion.div whileHover={{ scale: 1.03 }} className="bg-gray-900 rounded-2xl p-6 shadow-lg">
+            <Zap className="w-8 h-8 text-pink-400 mb-3" />
+            <h3 className="text-xl font-semibold mb-2">Replies in Seconds</h3>
+            <p className="text-gray-400">
+              Get instant replies ready to copy & paste — no more mental blocks.
+            </p>
           </motion.div>
+        </div>
+
+        <div className="mt-16 text-gray-500 text-sm">
+          Loved by over 10,000 hopeless romantics and savage flirters 💅
         </div>
       </motion.div>
     </div>

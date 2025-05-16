@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircle, Sparkles, Zap, Flame } from 'lucide-react';
+import { MessageCircle, Sparkles, Zap, Heart } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   return (
@@ -11,6 +11,14 @@ const LandingPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
+        {/* Icon top */}
+        <div className="mb-8 flex justify-center">
+          <div className="w-20 h-20 bg-pink-600 rounded-full flex items-center justify-center shadow-xl">
+            <Heart className="w-10 h-10 text-white" />
+          </div>
+        </div>
+
+        {/* Title + Description */}
         <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
           AI That Replies to Your DMs So You Don’t Have To
         </h1>
@@ -21,13 +29,15 @@ const LandingPage: React.FC = () => {
           Flirty, romantic, funny, cold, savage — you decide the tone. The AI does the magic.
         </p>
 
+        {/* CTA to Login */}
         <a
-          href="/app"
+          href="/login"
           className="bg-pink-600 hover:bg-pink-700 transition text-white font-semibold px-8 py-4 rounded-full text-lg shadow-lg"
         >
           💌 Generate Your Reply
         </a>
 
+        {/* How it works section */}
         <div className="mt-20 text-left">
           <h2 className="text-2xl font-semibold text-white text-center mb-10">
             How It Works
@@ -54,8 +64,9 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
 
+        {/* Footer */}
         <div className="mt-16 text-center text-sm text-gray-500">
-          Over 10,000 flirty comebacks generated 💘 Join the movement. Build by NadOx
+          Over 10,000 flirty comebacks generated 💘 Join the movement.Build by NadOx
         </div>
       </motion.div>
     </div>
